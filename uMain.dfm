@@ -1,4 +1,4 @@
-object Form2: TForm2
+object fMain: TfMain
   Left = 391
   Top = 238
   Caption = #1058#1077#1090#1088#1080#1089

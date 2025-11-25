@@ -14,7 +14,7 @@ const
   FIGURE_NUMBER = 36;
 
 type
-  TForm2 = class(TForm)
+  TfMain = class(TForm)
     GameTimer: TTimer;
     MainMenu1: TMainMenu;
     GameItems: TMenuItem;
@@ -86,7 +86,7 @@ type
   end;
 
 var
-  Form2: TForm2;
+  fMain: TfMain;
 
 implementation
 
@@ -165,7 +165,7 @@ const
 
 {$R *.DFM}
 
-procedure TForm2.ResetGameField;
+procedure TfMain.ResetGameField;
 var
   I, J: Integer;
 begin
@@ -174,7 +174,7 @@ begin
       FGameField[I, J] := 0;
 end;
 
-procedure TForm2.StartItemClick(Sender: TObject);
+procedure TfMain.StartItemClick(Sender: TObject);
 begin
   if FGamePaused then
   begin
@@ -206,7 +206,7 @@ begin
   PauseItem.Enabled := True;
 end;
 
-procedure TForm2.DrawItem(ALeft, ATop: Integer; AStyle: Integer);
+procedure TfMain.DrawItem(ALeft, ATop: Integer; AStyle: Integer);
 begin
   with Canvas do
   begin
@@ -244,7 +244,7 @@ begin
   end;
 end;
 
-procedure TForm2.InvalidateWorkArea(ABeforeGame: Boolean);
+procedure TfMain.InvalidateWorkArea(ABeforeGame: Boolean);
 var
   I, J: Integer;
   RectLeft, RectTop: Integer;
@@ -295,7 +295,7 @@ begin
     _OutMessage(S_GAME_OVER);
 end;
 
-procedure TForm2.FindFigureCenter;
+procedure TfMain.FindFigureCenter;
 var
   I, J, Line, Fill: Integer;
 begin
@@ -331,7 +331,7 @@ begin
   FFigureRotationCenterY := Round(FFigureRotationCenterY / Fill);
 end;
 
-procedure TForm2.GenerateNewFigure;
+procedure TfMain.GenerateNewFigure;
 var
   I, J, NewFigure: Integer;
 begin
@@ -371,7 +371,7 @@ begin
   RefreshScore;
 end;
 
-function TForm2.CanMoveFigureDown: Boolean;
+function TfMain.CanMoveFigureDown: Boolean;
 var
   I, J: Integer;
 begin
@@ -389,7 +389,7 @@ begin
   end;
 end;
 
-procedure TForm2.DrawFigure(AWithBorder: Boolean);
+procedure TfMain.DrawFigure(AWithBorder: Boolean);
 var
   I, J: Integer;
   RectLeft, RectTop, SaveTop: Integer;
@@ -420,7 +420,7 @@ begin
     end;
 end;
 
-procedure TForm2.ValidateFigure;
+procedure TfMain.ValidateFigure;
 var
   I, J{, RectLeft, SaveTop}: Integer;
 begin
@@ -443,7 +443,7 @@ begin
   GenerateNewFigure;
 end;
 
-procedure TForm2.MoveFigureDown;
+procedure TfMain.MoveFigureDown;
 var
   I, RectLeft, RectTop: Integer;
 begin
@@ -474,7 +474,7 @@ begin
   end;
 end;
 
-function TForm2.CanShiftFigure(ALeftShift: Boolean): Boolean;
+function TfMain.CanShiftFigure(ALeftShift: Boolean): Boolean;
 var
   I, J: Integer;
 begin
@@ -502,7 +502,7 @@ begin
   end;
 end;
 
-procedure TForm2.ShiftFigure(ALeftShift: Boolean);
+procedure TfMain.ShiftFigure(ALeftShift: Boolean);
 var
   I, SideIndex, RectLeft, RectTop: Integer;
 begin
@@ -548,7 +548,7 @@ begin
   end;
 end;
 
-procedure TForm2.TurnFigure(ALeftRotation: Boolean);
+procedure TfMain.TurnFigure(ALeftRotation: Boolean);
 var
   I, J, OldX, OldY, RealLeft, RealTop, RectTop, RectLeft, Save: Integer;
 
@@ -654,7 +654,7 @@ begin
   end;
 end;
 
-procedure TForm2.PutFigure;
+procedure TfMain.PutFigure;
 var
   I, J, RectLeft, RectTop, SaveTop: Integer;
 begin
@@ -691,7 +691,7 @@ begin
   end;
 end;
 
-procedure TForm2.StopGame;
+procedure TfMain.StopGame;
 begin
   FGameStopped := True;
   FGamePaused := False;
@@ -702,12 +702,12 @@ begin
   InvalidateWorkArea(False);
 end;
 
-procedure TForm2.GameTimerTimer(Sender: TObject);
+procedure TfMain.GameTimerTimer(Sender: TObject);
 begin
   MoveFigureDown;
 end;
 
-procedure TForm2.FormPaint(Sender: TObject);
+procedure TfMain.FormPaint(Sender: TObject);
 begin
   InvalidateWorkArea(False);
   if not(FGameStopped or FGamePaused) then
@@ -715,17 +715,17 @@ begin
   RefreshScore;
 end;
 
-procedure TForm2.StopItemClick(Sender: TObject);
+procedure TfMain.StopItemClick(Sender: TObject);
 begin
   StopGame;
 end;
 
-procedure TForm2.ExitItemClick(Sender: TObject);
+procedure TfMain.ExitItemClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TForm2.FormCreate(Sender: TObject);
+procedure TfMain.FormCreate(Sender: TObject);
 begin
   FFirstTime := True;
   FGameStopped := True;
@@ -735,7 +735,7 @@ begin
   ResetGameField;
 end;
 
-procedure TForm2.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TfMain.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if FTransferring or FGameStopped then
     Exit;
@@ -757,7 +757,7 @@ begin
     end;
 end;
 
-procedure TForm2.CheckLine;
+procedure TfMain.CheckLine;
 var
   FullLine: Boolean;
   I, J, BeforeBurnedLines: Integer;
@@ -781,7 +781,7 @@ begin
     end;
 end;
 
-procedure TForm2.BurnLine(ALine, ABeforeBurnedLines: Integer);
+procedure TfMain.BurnLine(ALine, ABeforeBurnedLines: Integer);
 var
   I, J, RectTop, RectLeft: Integer;
 begin
@@ -817,7 +817,7 @@ begin
   end;
 end;
 
-procedure TForm2.Remeasure;
+procedure TfMain.Remeasure;
 begin
   FStepX := ClientWidth div FIELD_WIDTH;
   FStepY := ClientHeight div FIELD_HEIGHT;
@@ -827,13 +827,13 @@ begin
     FStepY := FStepX;
 end;
 
-procedure TForm2.FormResize(Sender: TObject);
+procedure TfMain.FormResize(Sender: TObject);
 begin
   Remeasure;
   Invalidate;
 end;
 
-procedure TForm2.ValidateScore;
+procedure TfMain.ValidateScore;
 begin
   if (FLevel < MAX_LEVEL) and (FBurnedLineNumber mod LEVEL_STEP = 0) then
   begin
@@ -844,7 +844,7 @@ begin
   RefreshScore;
 end;
 
-procedure TForm2.RefreshScore;
+procedure TfMain.RefreshScore;
 var
   I, J, Height, RectTop, RectLeft: Integer;
   DrawingRect: TRect;
@@ -897,7 +897,7 @@ begin
   Canvas.Rectangle(DrawingRect.Left, DrawingRect.Top, ClientWidth, ClientHeight);
 end;
 
-procedure TForm2.PauseGame;
+procedure TfMain.PauseGame;
 begin
   GameTimer.Enabled := FGamePaused;
   FGamePaused := not FGamePaused;
@@ -911,7 +911,7 @@ begin
   end;
 end;
 
-procedure TForm2.PauseItemClick(Sender: TObject);
+procedure TfMain.PauseItemClick(Sender: TObject);
 begin
   PauseGame;
 end;
